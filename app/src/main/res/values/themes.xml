@@ -1,0 +1,9 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Setarekhan" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="android:fontFamily">@font/iranyekanwebblack</item>
+        <item name="fontFamily">@font/iranyekanwebblack</item>
+    </style>
+
+    <style name="Theme.Setarekhan" parent="Base.Theme.Setarekhan" />
+</resources>

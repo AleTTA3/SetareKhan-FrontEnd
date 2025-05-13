@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:padding="16dp"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <EditText android:id="@+id/editTextUsername" android:hint="نام کاربری"
+        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <EditText android:id="@+id/editTextPassword" android:hint="رمز عبور"
+        android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="textPassword"/>
+    <Button android:id="@+id/buttonSignUp" android:text="ثبت‌نام"
+        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+</LinearLayout>
