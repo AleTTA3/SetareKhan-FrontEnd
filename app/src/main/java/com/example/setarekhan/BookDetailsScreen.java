@@ -55,11 +55,25 @@ public class BookDetailsScreen extends AppCompatActivity {
             titleTextView.setText(book.getTitle());
             authorTextView.setText(book.getAuthor());
             descriptionTextView.setText(book.getDescription());
-            bookImage.setImageResource(book.getImageResId());
+
+            // اصلاح بخش نمایش عکس
+            String imageName = book.getImagePath();
+            if (imageName != null) {
+                imageName = imageName.replace(".jpg", "").replace(".png", "").toLowerCase();
+                int resId = getResources().getIdentifier(imageName, "drawable", getPackageName());
+                if (resId != 0) {
+                    bookImage.setImageResource(resId);
+                } else {
+                    bookImage.setImageResource(R.drawable.default_image);
+                }
+            } else {
+                bookImage.setImageResource(R.drawable.default_image);
+            }
 
             // فراخوانی نظرات از سرور
             fetchReviews(book.getId());
-        } else {
+        }
+        else {
             Log.e("BookDetailsScreen", "کتاب null است!");
         }
     }

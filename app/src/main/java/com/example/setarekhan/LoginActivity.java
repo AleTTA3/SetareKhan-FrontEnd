@@ -1,19 +1,31 @@
-
 package com.example.setarekhan;
-import static androidx.core.content.ContextCompat.startActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText editTextUsername, editTextPassword;
     private Button buttonLogin;
+
+    private final String LOGIN_URL = "https://setarekhan-backend-api.onrender.com/kaka/login";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,21 +36,73 @@ public class LoginActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonLogin = findViewById(R.id.buttonLogin);
 
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String username = editTextUsername.getText().toString().trim();
-                String password = editTextPassword.getText().toString().trim();
+        buttonLogin.setOnClickListener(v -> {
+            String username = editTextUsername.getText().toString().trim();
+            String password = editTextPassword.getText().toString().trim();
 
-                if (username.equals("admin") && password.equals("1234")) {
-                    Toast.makeText(LoginActivity.this, "ورود موفقیت‌آمیز بود", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginActivity.this, BookListScreen.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Toast.makeText(LoginActivity.this, "نام کاربری یا رمز عبور اشتباه است", Toast.LENGTH_SHORT).show();
-                }
+            if (username.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "لطفاً تمام فیلدها را پر کنید", Toast.LENGTH_SHORT).show();
+                return;
             }
+
+            sendLoginRequest(username, password);
         });
+    }
+
+    private void sendLoginRequest(String username, String password) {
+        try {
+            JSONObject jsonBody = new JSONObject();
+            jsonBody.put("userName", username);
+            jsonBody.put("password", password);
+
+            JsonObjectRequest request = new JsonObjectRequest(
+                    Request.Method.POST,
+                    LOGIN_URL,
+                    jsonBody,
+                    response -> {
+                        try {
+                            if (response.has("status") && response.getString("status").equals("ok")) {
+                                Toast.makeText(this, "ورود موفقیت‌آمیز بود", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(this, BookListScreen.class);
+                                intent.putExtra("username", username);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(this, "ورود موفق نبود، اطلاعات را بررسی کنید", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception e) {
+                            Log.e("Login", "پاسخ نامعتبر از سرور: " + e.getMessage());
+                            Toast.makeText(this, "خطا در پردازش پاسخ سرور", Toast.LENGTH_SHORT).show();
+                        }
+                    },
+                    error -> {
+                        Log.e("Login", "خطای اتصال: " + error.toString());
+                        if (error.networkResponse != null) {
+                            int statusCode = error.networkResponse.statusCode;
+                            if (statusCode == 404) {
+                                Toast.makeText(this, "نام کاربری یا رمز اشتباه است", Toast.LENGTH_SHORT).show();
+                            } else if (statusCode == 500) {
+                                Toast.makeText(this, "خطا در اتصال به پایگاه داده", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(this, "خطای ناشناخته: " + statusCode, Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(this, "عدم ارتباط با سرور", Toast.LENGTH_SHORT).show();
+                        }
+                    }) {
+                @Override
+                public Map<String, String> getHeaders() {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Content-Type", "application/json");
+                    return headers;
+                }
+            };
+
+            Volley.newRequestQueue(this).add(request);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "خطا در ساخت درخواست ورود", Toast.LENGTH_SHORT).show();
+        }
     }
 }

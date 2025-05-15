@@ -1,12 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:padding="16dp"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_image"
+    android:padding="24dp">
 
-    <EditText android:id="@+id/editTextUsername" android:hint="نام کاربری"
-        android:layout_width="match_parent" android:layout_height="wrap_content"/>
-    <EditText android:id="@+id/editTextPassword" android:hint="رمز عبور"
-        android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="textPassword"/>
-    <Button android:id="@+id/buttonSignUp" android:text="ثبت‌نام"
-        android:layout_width="match_parent" android:layout_height="wrap_content"/>
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layoutDirection="rtl">
+
+        <EditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ایمیل"
+            android:inputType="textEmailAddress"
+            android:background="@drawable/rounded_edittext"
+            android:padding="12dp"
+            android:textDirection="rtl"
+            android:textColor="#000"
+            android:textColorHint="#999"
+            android:layout_marginBottom="16dp"/>
+
+        <EditText
+            android:id="@+id/editTextUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="نام کاربری"
+            android:inputType="text"
+            android:background="@drawable/rounded_edittext"
+            android:padding="12dp"
+            android:textDirection="rtl"
+            android:textColor="#000"
+            android:textColorHint="#999"
+            android:layout_marginBottom="16dp"/>
+
+        <EditText
+            android:id="@+id/editTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="رمز عبور"
+            android:inputType="textPassword"
+            android:background="@drawable/rounded_edittext"
+            android:padding="12dp"
+            android:textDirection="rtl"
+            android:textColor="#000"
+            android:textColorHint="#999"
+            android:layout_marginBottom="16dp"/>
+
+        <EditText
+            android:id="@+id/editTextConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="تکرار رمز عبور"
+            android:inputType="textPassword"
+            android:background="@drawable/rounded_edittext"
+            android:padding="12dp"
+            android:textDirection="rtl"
+            android:textColor="#000"
+            android:textColorHint="#999"
+            android:layout_marginBottom="24dp"/>
+
+        <Button
+            android:id="@+id/buttonSignUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ثبت نام"
+            android:backgroundTint="#FF5722"
+            android:textColor="#fff"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+</ScrollView>
