@@ -3,38 +3,37 @@ package com.example.setarekhan;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class BookListScreen extends MenuBar {
 
-    List<Book> books = new ArrayList<>();
-    ListView listView;
-    BookAdapter adapter;
+    private List<Book> books = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private BookRecyclerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_list_screen);
 
-        listView = findViewById(R.id.book_list_view);
-        adapter = new BookAdapter(this, books);
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener((parent, view, position, id) -> {
-            Intent intent = new Intent(BookListScreen.this, BookDetailsScreen.class);
-            intent.putExtra("book", books.get(position));  // کل کتاب رو می‌فرستیم
-            startActivity(intent);
-        });
+        recyclerView = findViewById(R.id.book_recycler);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2)); // دو ستون
+        adapter = new BookRecyclerAdapter(this, books);
+        recyclerView.setAdapter(adapter);
 
         fetchBooks();
     }
@@ -70,5 +69,4 @@ public class BookListScreen extends MenuBar {
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(request);
     }
-
 }

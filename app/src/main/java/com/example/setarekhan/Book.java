@@ -6,12 +6,12 @@ import java.util.List;
 
 public class Book implements Serializable {
     public String id;
-    private String title;
-    private String author;
-    private String description;
-    private String imagePath;
+    private final String title;
+    private final String author;
+    private final String description;
+    private final String imagePath;
 
-    private List<String> reviews;
+    private final List<String> reviews;
 
     public Book(String id, String title, String author, String description, String imagePath, List<String> reviews) {
         this.id = id;
