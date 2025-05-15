@@ -36,6 +36,12 @@ public class ProfileActivity extends AppCompatActivity {
         profileImage.setImageResource(R.drawable.avatar); // آواتار پیش‌فرض (در پوشه drawable)
 
         buttonLogout.setOnClickListener(v -> {
+            // حذف اطلاعات ذخیره‌شده
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.remove("username"); // یا editor.clear() برای پاک کردن همه چیز
+            editor.apply();
+
+            // بازگشت به صفحه کتاب‌ها
             Intent intent = new Intent(ProfileActivity.this, BookListScreen.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);

@@ -43,5 +43,26 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp" />
 
+        <EditText
+            android:id="@+id/editTextReview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="نظر خود را بنویسید" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="1.0"
+            android:rating="4.0" />
+
+        <Button
+            android:id="@+id/buttonSubmitReview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ثبت نظر" />
+
     </LinearLayout>
+
 </ScrollView>
