@@ -1,6 +1,7 @@
 package com.example.setarekhan;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -52,44 +54,41 @@ public class LoginActivity extends AppCompatActivity {
     private void sendLoginRequest(String username, String password) {
         try {
             JSONObject jsonBody = new JSONObject();
-            jsonBody.put("userName", username);
-            jsonBody.put("password", password);
+            try {
+                jsonBody.put("userName", username);
+                jsonBody.put("password", password);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
             JsonObjectRequest request = new JsonObjectRequest(
                     Request.Method.POST,
                     LOGIN_URL,
                     jsonBody,
                     response -> {
-                        try {
-                            if (response.has("status") && response.getString("status").equals("ok")) {
-                                Toast.makeText(this, "ورود موفقیت‌آمیز بود", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(this, BookListScreen.class);
-                                intent.putExtra("username", username);
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                Toast.makeText(this, "ورود موفق نبود، اطلاعات را بررسی کنید", Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (Exception e) {
-                            Log.e("Login", "پاسخ نامعتبر از سرور: " + e.getMessage());
-                            Toast.makeText(this, "خطا در پردازش پاسخ سرور", Toast.LENGTH_SHORT).show();
-                        }
+                        Toast.makeText(this, "ورود موفق بود", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(this, BookListScreen.class));
+                        SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("username", username);
+                        editor.apply();
+                        finish();
                     },
                     error -> {
-                        Log.e("Login", "خطای اتصال: " + error.toString());
                         if (error.networkResponse != null) {
                             int statusCode = error.networkResponse.statusCode;
                             if (statusCode == 404) {
                                 Toast.makeText(this, "نام کاربری یا رمز اشتباه است", Toast.LENGTH_SHORT).show();
                             } else if (statusCode == 500) {
-                                Toast.makeText(this, "خطا در اتصال به پایگاه داده", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(this, "خطا در سرور یا پایگاه داده", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(this, "خطای ناشناخته: " + statusCode, Toast.LENGTH_SHORT).show();
                             }
                         } else {
                             Toast.makeText(this, "عدم ارتباط با سرور", Toast.LENGTH_SHORT).show();
                         }
-                    }) {
+                    }
+            ) {
                 @Override
                 public Map<String, String> getHeaders() {
                     Map<String, String> headers = new HashMap<>();
