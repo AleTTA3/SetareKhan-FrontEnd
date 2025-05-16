@@ -20,7 +20,6 @@ public class ProfileActivity extends AppCompatActivity {
         TextView textViewUsername = findViewById(R.id.textViewUsername);
         ImageView profileImage = findViewById(R.id.profileImage);
         Button buttonLogout = findViewById(R.id.buttonLogout);
-        Button buttonSettings = findViewById(R.id.buttonSettings);
         SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         String username = sharedPreferences.getString("username", null);
 
@@ -48,10 +47,5 @@ public class ProfileActivity extends AppCompatActivity {
             finish();
         });
 
-        buttonSettings.setOnClickListener(v -> {
-            Intent intent = new Intent(ProfileActivity.this, SettingsActivity.class);
-            intent.putExtra("username", username);
-            startActivity(intent);
-        });
     }
 }

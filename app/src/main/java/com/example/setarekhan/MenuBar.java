@@ -31,14 +31,13 @@ public class MenuBar extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         addCustomMenuItem(menu, 1, "خانه");
-        addCustomMenuItem(menu, 2, "تنظیمات");
-        addCustomMenuItem(menu, 3, "ورود");
-        addCustomMenuItem(menu, 4, "ثبت نام");
-        addCustomMenuItem(menu, 5, "پروفایل");
-        addCustomMenuItem(menu, 6, "ماشین حساب");
-        addCustomMenuItem(menu, 7, "کلاس Intent");
-        addCustomMenuItem(menu, 8, "قیمت رمز ارز های محبوب");
-        addCustomMenuItem(menu, 9, "آب و هوای تهران");
+        addCustomMenuItem(menu, 2, "ورود");
+        addCustomMenuItem(menu, 3, "ثبت نام");
+        addCustomMenuItem(menu, 4, "پروفایل");
+        addCustomMenuItem(menu, 5, "ماشین حساب");
+        addCustomMenuItem(menu, 6, "کلاس Intent");
+        addCustomMenuItem(menu, 7, "قیمت رمز ارز های محبوب");
+        addCustomMenuItem(menu, 8, "آب و هوای تهران");
         return true;
     }
 
@@ -65,41 +64,36 @@ public class MenuBar extends AppCompatActivity {
                 Toast.makeText(this, "این خانه است", Toast.LENGTH_SHORT).show();
                 return true;
             case 2:
-                intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
-
-                return true;
-            case 3:
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 Toast.makeText(this, "این ورود است", Toast.LENGTH_SHORT).show();
                 return true;
-            case 4:
+            case 3:
                 intent = new Intent(this, SignUpActivity.class);
                 startActivity(intent);
                 Toast.makeText(this, "این ثبت نام است", Toast.LENGTH_SHORT).show();
                 return true;
-            case 5:
+            case 4:
                 intent = new Intent(this, ProfileActivity.class);
                 startActivity(intent);
                 Toast.makeText(this, "این پروفایل است", Toast.LENGTH_SHORT).show();
                 return true;
-            case 6:
+            case 5:
                 intent = new Intent(this, Calculater.class);
                 startActivity(intent);
                 Toast.makeText(this, "این ماشین حساب است", Toast.LENGTH_SHORT).show();
                 return true;
-            case 7:
+            case 6:
                 intent = new Intent(this, intent.class);
                 startActivity(intent);
                 Toast.makeText(this, "این کلاس intent است", Toast.LENGTH_SHORT).show();
                 return true;
-            case 8:
+            case 7:
                 intent = new Intent(this, CoinActivity.class);
                 startActivity(intent);
                 Toast.makeText(this, "صفحه رمز ارز ها است", Toast.LENGTH_SHORT).show();
                 return true;
-            case 9:
+            case 8:
                 intent = new Intent(this, Weather.class);
                 startActivity(intent);
                 Toast.makeText(this, "آب و هوای تهران...", Toast.LENGTH_SHORT).show();
