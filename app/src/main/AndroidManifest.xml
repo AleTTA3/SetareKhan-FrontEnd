@@ -37,9 +37,6 @@
         <activity android:name=".ProfileActivity" android:exported="false">
 
         </activity>
-        <activity android:name=".SettingsActivity" android:exported="false">
-
-        </activity>
         <activity android:name=".intent" android:exported="false">
 
         </activity>
