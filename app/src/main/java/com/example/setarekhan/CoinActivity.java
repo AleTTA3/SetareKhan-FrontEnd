@@ -1,12 +1,11 @@
 package com.example.setarekhan;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -31,7 +30,7 @@ public class CoinActivity extends AppCompatActivity {
     private void fetchCryptoPrices() {
         String url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,dogecoin&vs_currencies=usd";
 
-        StringRequest request = new StringRequest(Request.Method.GET, url,
+        @SuppressLint("SetTextI18n") StringRequest request = new StringRequest(Request.Method.GET, url,
                 response -> {
                     try {
                         JSONObject jsonObject = new JSONObject(response);
@@ -43,12 +42,11 @@ public class CoinActivity extends AppCompatActivity {
                         txtEthereum.setText("Ethereum: $" + ethereum);
                         txtDoge.setText("Dogecoin: $" + doge);
                     } catch (Exception e) {
+                        //noinspection CallToPrintStackTrace
                         e.printStackTrace();
                     }
                 },
-                error -> {
-                    txtBitcoin.setText("خطا در دریافت قیمت‌ها!");
-                });
+                error -> txtBitcoin.setText("خطا در دریافت قیمت‌ها!"));
 
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(request);

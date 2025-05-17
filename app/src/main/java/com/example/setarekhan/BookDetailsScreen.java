@@ -23,15 +23,11 @@ import java.util.List;
 
 public class BookDetailsScreen extends AppCompatActivity {
 
-    private TextView titleTextView, authorTextView, descriptionTextView;
-    private ImageView bookImage;
-    private RecyclerView reviewRecyclerView;
     private ReviewAdapter reviewAdapter;
-    private List<Review> reviews = new ArrayList<>();
+    private final List<Review> reviews = new ArrayList<>();
 
     private EditText editTextReview;
     private RatingBar ratingBar;
-    private Button buttonSubmitReview;
 
     private Book book;
 
@@ -41,14 +37,14 @@ public class BookDetailsScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_details_screen);
 
-        titleTextView = findViewById(R.id.book_title);
-        authorTextView = findViewById(R.id.book_author);
-        descriptionTextView = findViewById(R.id.book_description);
-        bookImage = findViewById(R.id.book_image);
-        reviewRecyclerView = findViewById(R.id.review_recycler);
+        TextView titleTextView = findViewById(R.id.book_title);
+        TextView authorTextView = findViewById(R.id.book_author);
+        TextView descriptionTextView = findViewById(R.id.book_description);
+        ImageView bookImage = findViewById(R.id.book_image);
+        RecyclerView reviewRecyclerView = findViewById(R.id.review_recycler);
         editTextReview = findViewById(R.id.editTextReview);
         ratingBar = findViewById(R.id.ratingBar);
-        buttonSubmitReview = findViewById(R.id.buttonSubmitReview);
+        Button buttonSubmitReview = findViewById(R.id.buttonSubmitReview);
 
         reviewAdapter = new ReviewAdapter(reviews);
         reviewRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -63,7 +59,7 @@ public class BookDetailsScreen extends AppCompatActivity {
             String imageName = book.getImagePath();
             if (imageName != null) {
                 imageName = imageName.replace(".jpg", "").replace(".png", "").toLowerCase();
-                int resId = getResources().getIdentifier(imageName, "drawable", getPackageName());
+                @SuppressLint("DiscouragedApi") int resId = getResources().getIdentifier(imageName, "drawable", getPackageName());
                 if (resId != 0) {
                     bookImage.setImageResource(resId);
                 } else {
@@ -100,6 +96,7 @@ public class BookDetailsScreen extends AppCompatActivity {
             body.put("review", reviewText);
             body.put("rating", rating);
         } catch (Exception e) {
+            //noinspection CallToPrintStackTrace
             e.printStackTrace();
         }
 
@@ -128,6 +125,7 @@ public class BookDetailsScreen extends AppCompatActivity {
         Volley.newRequestQueue(this).add(request);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void parseReviewResponse(JSONArray response) {
         reviews.clear();
         for (int i = 0; i < response.length(); i++) {
@@ -140,6 +138,7 @@ public class BookDetailsScreen extends AppCompatActivity {
                 );
                 reviews.add(review);
             } catch (JSONException e) {
+                //noinspection CallToPrintStackTrace
                 e.printStackTrace();
             }
         }

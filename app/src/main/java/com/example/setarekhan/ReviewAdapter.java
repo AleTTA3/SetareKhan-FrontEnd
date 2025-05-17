@@ -1,5 +1,6 @@
 package com.example.setarekhan;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +13,13 @@ import java.util.List;
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder> {
 
-    private List<Review> reviewList;
+    private final List<Review> reviewList;
 
     public ReviewAdapter(List<Review> reviewList) {
         this.reviewList = reviewList;
     }
 
+    /** @noinspection ClassEscapesDefinedScope*/
     @NonNull
     @Override
     public ReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -25,6 +27,8 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
         return new ReviewViewHolder(view);
     }
 
+    /** @noinspection ClassEscapesDefinedScope*/
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
         Review review = reviewList.get(position);

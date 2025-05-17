@@ -10,17 +10,14 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class BookListScreen extends MenuBar {
 
-    private List<Book> books = new ArrayList<>();
-    private RecyclerView recyclerView;
+    private final List<Book> books = new ArrayList<>();
     private BookRecyclerAdapter adapter;
 
     @Override
@@ -28,7 +25,7 @@ public class BookListScreen extends MenuBar {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_list_screen);
 
-        recyclerView = findViewById(R.id.book_recycler);
+        RecyclerView recyclerView = findViewById(R.id.book_recycler);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         adapter = new BookRecyclerAdapter(this, books);
         recyclerView.setAdapter(adapter);
@@ -51,9 +48,8 @@ public class BookListScreen extends MenuBar {
                             String author = obj.getString("author");
                             String description = obj.getString("description");
                             String imagePath = obj.getString("imagePath");
-                            List<String> reviews = Arrays.asList("نقدی ثبت نشده");
 
-                            Book book = new Book(id, title, author, description, imagePath, reviews);
+                            Book book = new Book(id, title, author, description, imagePath);
                             books.add(book);
                         }
 

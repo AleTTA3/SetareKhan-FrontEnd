@@ -19,6 +19,7 @@ public class MenuBar extends AppCompatActivity {
         tv.setText(title);
         tv.setTextSize(18);
         tv.setPadding(20, 10, 20, 10);
+        //noinspection deprecation
         tv.setTextColor(getResources().getColor(android.R.color.white));
 
         Typeface typeface = ResourcesCompat.getFont(this, R.font.iranyekanwebextrabold);
@@ -34,25 +35,30 @@ public class MenuBar extends AppCompatActivity {
         // سرچ‌ویو
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setQueryHint("نام کتاب را وارد کنید");
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                if (MenuBar.this instanceof BookListScreen) {
-                    ((BookListScreen) MenuBar.this).performSearch(query);
-                }
-                return true;
-            }
+        if (searchView != null) {
+            searchView.setQueryHint("نام کتاب را وارد کنید");
+        }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                if (MenuBar.this instanceof BookListScreen) {
-                    ((BookListScreen) MenuBar.this).performSearch(newText);
+        if (searchView != null) {
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    if (MenuBar.this instanceof BookListScreen) {
+                        ((BookListScreen) MenuBar.this).performSearch(query);
+                    }
+                    return true;
                 }
-                return true;
-            }
-        });
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    if (MenuBar.this instanceof BookListScreen) {
+                        ((BookListScreen) MenuBar.this).performSearch(newText);
+                    }
+                    return true;
+                }
+            });
+        }
 
         // آیتم‌های منو
         addCustomMenuItem(menu, 1, "خانه");

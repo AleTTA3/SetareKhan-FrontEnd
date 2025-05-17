@@ -1,9 +1,9 @@
 package com.example.setarekhan;
 
 public class Review {
-    private String userName;
-    private String review;
-    private int rating;
+    private final String userName;
+    private final String review;
+    private final int rating;
 
     public Review(String userName, String review, int rating) {
         this.userName = userName;

@@ -1,15 +1,16 @@
 package com.example.setarekhan;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapter.BookViewHolder> {
 
-    private Context context;
+    private final Context context;
     private List<Book> bookList;
     private List<Book> fullBookList;
 
@@ -42,8 +43,9 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
         }
     }
 
+    @NonNull
     @Override
-    public BookViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_book, parent, false);
         return new BookViewHolder(view);
     }
@@ -58,7 +60,7 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
         if (imageName != null && !imageName.isEmpty()) {
             imageName = imageName.replace(".jpg", "").replace(".png", "").toLowerCase();
 
-            int resId = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
+            @SuppressLint("DiscouragedApi") int resId = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
 
             if (resId != 0) {
                 try {
@@ -95,6 +97,7 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
         filterList(filtered);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void filterList(List<Book> filteredList) {
         this.bookList = filteredList;
         notifyDataSetChanged();

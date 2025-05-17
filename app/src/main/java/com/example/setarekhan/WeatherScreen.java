@@ -1,13 +1,13 @@
 package com.example.setarekhan;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.gson.annotations.SerializedName;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,10 +35,10 @@ public class  WeatherScreen  extends AppCompatActivity {
         tvHumidity = findViewById(R.id.tvHumidity);
         tvWind = findViewById(R.id.tvWind);
 
-        fetchWeather("Tehran");
+        fetchWeather();
     }
 
-    private void fetchWeather(String cityName) {
+    private void fetchWeather() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -46,24 +46,25 @@ public class  WeatherScreen  extends AppCompatActivity {
 
         WeatherApi api = retrofit.create(WeatherApi.class);
 
-        Call<WeatherResponse> call = api.getWeather(cityName, API_KEY, "metric", "fa");
-        call.enqueue(new Callback<WeatherResponse>() {
+        Call<WeatherResponse> call = api.getWeather("Tehran", API_KEY, "metric", "fa");
+        call.enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
+            public void onResponse(@NonNull Call<WeatherResponse> call, @NonNull Response<WeatherResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     updateUI(response.body());
                 } else {
-                    Toast.makeText( WeatherScreen.this, "خطا در دریافت داده‌ها", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(WeatherScreen.this, "خطا در دریافت داده‌ها", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<WeatherResponse> call, Throwable t) {
-                Toast.makeText( WeatherScreen.this, "خطا: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            public void onFailure(@NonNull Call<WeatherResponse> call, @NonNull Throwable t) {
+                Toast.makeText(WeatherScreen.this, "خطا: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
+    @SuppressLint({"DefaultLocale", "SetTextI18n"})
     private void updateUI(WeatherResponse weather) {
         tvCity.setText(weather.name);
         if (weather.weather != null && weather.weather.length > 0) {

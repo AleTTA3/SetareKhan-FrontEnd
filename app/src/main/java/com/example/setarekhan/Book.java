@@ -2,7 +2,6 @@
 package com.example.setarekhan;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class Book implements Serializable {
     public String id;
@@ -11,15 +10,12 @@ public class Book implements Serializable {
     private final String description;
     private final String imagePath;
 
-    private final List<String> reviews;
-
-    public Book(String id, String title, String author, String description, String imagePath, List<String> reviews) {
+    public Book(String id, String title, String author, String description, String imagePath) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.description = description;
         this.imagePath = imagePath;
-        this.reviews = reviews;
     }
 
 
@@ -29,6 +25,5 @@ public class Book implements Serializable {
     public String getImagePath() { return imagePath; }
 
     public String getId() { return id;}
-    public List<String> getReviews() { return reviews; }
 
 }

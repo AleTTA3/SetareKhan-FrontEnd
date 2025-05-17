@@ -147,50 +147,47 @@ public class Calculater extends AppCompatActivity {
                 txt_sum.setText(txt_sum.getText().toString()+"/");
             }
         });
-        btn_mosavi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String expression = txt_sum.getText().toString();
-                double firstInput = 0;
-                double secondInput = 0;
-                char operator = ' ';
-                double result = 0;
+        btn_mosavi.setOnClickListener(v -> {
+            String expression = txt_sum.getText().toString();
+            double firstInput;
+            double secondInput;
+            char operator = ' ';
+            double result = 0;
 
-                if (expression.contains("+")) {
-                    operator = '+';
-                } else if (expression.contains("-")) {
-                    operator = '-';
-                } else if (expression.contains("*")) {
-                    operator = '*';
-                } else if (expression.contains("/")) {
-                    operator = '/';
-                }
-                int operatorIndex = expression.indexOf(operator);
-                firstInput = Double.parseDouble(expression.substring(0, operatorIndex));
-                secondInput = Double.parseDouble(expression.substring(operatorIndex + 1));
-
-                switch (operator) {
-                    case '+':
-                        result = firstInput + secondInput;
-                        break;
-                    case '-':
-                        result = firstInput - secondInput;
-                        break;
-                    case '*':
-                        result = firstInput * secondInput;
-                        break;
-                    case '/':
-                        if (secondInput != 0) {
-                            result = firstInput / secondInput;
-                        } else {
-                            txt_result.setText("تقسیم بر صفر ممکن نیست");
-                            return;
-                        }
-                        break;
-                }
-
-                txt_result.setText(String.valueOf(result));
+            if (expression.contains("+")) {
+                operator = '+';
+            } else if (expression.contains("-")) {
+                operator = '-';
+            } else if (expression.contains("*")) {
+                operator = '*';
+            } else if (expression.contains("/")) {
+                operator = '/';
             }
+            int operatorIndex = expression.indexOf(operator);
+            firstInput = Double.parseDouble(expression.substring(0, operatorIndex));
+            secondInput = Double.parseDouble(expression.substring(operatorIndex + 1));
+
+            switch (operator) {
+                case '+':
+                    result = firstInput + secondInput;
+                    break;
+                case '-':
+                    result = firstInput - secondInput;
+                    break;
+                case '*':
+                    result = firstInput * secondInput;
+                    break;
+                case '/':
+                    if (secondInput != 0) {
+                        result = firstInput / secondInput;
+                    } else {
+                        txt_result.setText("تقسیم بر صفر ممکن نیست");
+                        return;
+                    }
+                    break;
+            }
+
+            txt_result.setText(String.valueOf(result));
         });
 
     }

@@ -3,7 +3,6 @@ package com.example.setarekhan;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -11,8 +10,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -25,7 +22,6 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText editTextUsername, editTextPassword;
-    private Button buttonLogin;
 
     private final String LOGIN_URL = "https://setarekhan-backend-api.onrender.com/kaka/login";
 
@@ -36,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
 
         editTextUsername = findViewById(R.id.editTextUsername);
         editTextPassword = findViewById(R.id.editTextPassword);
-        buttonLogin = findViewById(R.id.buttonLogin);
+        Button buttonLogin = findViewById(R.id.buttonLogin);
 
         buttonLogin.setOnClickListener(v -> {
             String username = editTextUsername.getText().toString().trim();
@@ -58,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
                 jsonBody.put("userName", username);
                 jsonBody.put("password", password);
             } catch (JSONException e) {
+                //noinspection CallToPrintStackTrace
                 e.printStackTrace();
             }
 
@@ -100,6 +97,7 @@ public class LoginActivity extends AppCompatActivity {
             Volley.newRequestQueue(this).add(request);
 
         } catch (Exception e) {
+            //noinspection CallToPrintStackTrace
             e.printStackTrace();
             Toast.makeText(this, "خطا در ساخت درخواست ورود", Toast.LENGTH_SHORT).show();
         }

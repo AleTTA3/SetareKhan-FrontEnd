@@ -7,7 +7,6 @@ import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.*;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
@@ -18,7 +17,6 @@ import java.util.Map;
 public class SignUpActivity extends AppCompatActivity {
 
     private EditText editTextEmail, editTextUsername, editTextPassword, editTextConfirmPassword;
-    private Button buttonSignUp;
 
     private final String SIGNUP_URL = "https://setarekhan-backend-api.onrender.com/kaka/signup";
 
@@ -32,7 +30,7 @@ public class SignUpActivity extends AppCompatActivity {
         editTextUsername = findViewById(R.id.editTextUsername);
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
-        buttonSignUp = findViewById(R.id.buttonSignUp);
+        Button buttonSignUp = findViewById(R.id.buttonSignUp);
 
         // رویداد دکمه
         buttonSignUp.setOnClickListener(v -> {
@@ -107,6 +105,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             Volley.newRequestQueue(this).add(request);
         } catch (Exception e) {
+            //noinspection CallToPrintStackTrace
             e.printStackTrace();
             Toast.makeText(this, "خطا در ساخت درخواست", Toast.LENGTH_SHORT).show();
         }
