@@ -23,7 +23,7 @@ public class  WeatherScreen  extends AppCompatActivity {
 
     private static final String BASE_URL = "https://api.openweathermap.org/";
     private static final String API_KEY = "80fdd4e89bcb38c5558f485d38a1cf55";
-
+    //https://api.openweathermap.org/data/2.5/weather?q=Tehran&appid=80fdd4e89bcb38c5558f485d38a1cf55
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
