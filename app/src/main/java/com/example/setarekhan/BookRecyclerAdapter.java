@@ -12,17 +12,24 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapter.BookViewHolder> {
 
     private Context context;
     private List<Book> bookList;
+    private List<Book> fullBookList;
 
     public BookRecyclerAdapter(Context context, List<Book> bookList) {
         this.context = context;
         this.bookList = bookList;
+        this.fullBookList = new ArrayList<>(bookList);
     }
+    public void setFullBookList(List<Book> fullList) {
+        this.fullBookList = new ArrayList<>(fullList);
+    }
+
 
     public static class BookViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
@@ -66,7 +73,6 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
             holder.imageView.setImageResource(R.drawable.default_image);
         }
 
-
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, BookDetailsScreen.class);
             intent.putExtra("book", book);
@@ -77,5 +83,20 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
     @Override
     public int getItemCount() {
         return bookList.size();
+    }
+
+    public void filter(String query) {
+        List<Book> filtered = new ArrayList<>();
+        for (Book book : fullBookList) {
+            if (book.getTitle().toLowerCase().contains(query.toLowerCase())) {
+                filtered.add(book);
+            }
+        }
+        filterList(filtered);
+    }
+
+    public void filterList(List<Book> filteredList) {
+        this.bookList = filteredList;
+        notifyDataSetChanged();
     }
 }

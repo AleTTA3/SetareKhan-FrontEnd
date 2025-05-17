@@ -1,9 +1,7 @@
 package com.example.setarekhan;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,7 +29,7 @@ public class BookListScreen extends MenuBar {
         setContentView(R.layout.activity_book_list_screen);
 
         recyclerView = findViewById(R.id.book_recycler);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2)); // دو ستون
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         adapter = new BookRecyclerAdapter(this, books);
         recyclerView.setAdapter(adapter);
 
@@ -52,13 +50,16 @@ public class BookListScreen extends MenuBar {
                             String title = obj.getString("title");
                             String author = obj.getString("author");
                             String description = obj.getString("description");
-                            String imagePath = obj.getString("imagePath"); // ✅ اضافه شد
-                            List<String> reviews = Arrays.asList("نقدی ثبت نشده"); // یا بعداً از سرور بیاد
+                            String imagePath = obj.getString("imagePath");
+                            List<String> reviews = Arrays.asList("نقدی ثبت نشده");
 
                             Book book = new Book(id, title, author, description, imagePath, reviews);
                             books.add(book);
                         }
-                        adapter.notifyDataSetChanged();
+
+                        // اینجا مهمه
+                        adapter.setFullBookList(books);
+                        adapter.filterList(books);  // نمایش همه در ابتدا
                     } catch (Exception e) {
                         Log.e("BookListScreen", "JSON parsing error", e);
                     }
@@ -68,5 +69,12 @@ public class BookListScreen extends MenuBar {
 
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(request);
+    }
+
+
+    public void performSearch(String query) {
+        if (adapter != null) {
+            adapter.filter(query);
+        }
     }
 }
