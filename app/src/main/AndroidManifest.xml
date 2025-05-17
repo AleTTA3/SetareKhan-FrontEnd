@@ -43,7 +43,7 @@
         <activity android:name=".CoinActivity" android:exported="false">
 
         </activity>
-        <activity android:name=".Weather" android:exported="false">
+        <activity android:name=".WeatherScreen" android:exported="false">
 
         </activity>
     </application>
